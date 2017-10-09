@@ -17,4 +17,4 @@ def setMessageNum(url, num):
     #保存图片
     img.save('0000/message.jpg')
 
-setMessageNum('0000/head.jpg', 8)
+setMessageNum('0000/head.jpg', 6)
