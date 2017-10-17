@@ -3,6 +3,7 @@
 import requests, re
 from bs4 import BeautifulSoup
 
+#ssl证书
 from requests.packages.urllib3.exceptions import InsecureRequestWarning,InsecurePlatformWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 requests.packages.urllib3.disable_warnings(InsecurePlatformWarning)
@@ -25,6 +26,6 @@ for i in ol:
                 if not re.match(r'\[\d\]', child):
                     f.write(child + '\n')
             else:
-                if not re.match(r'\[\d\]', child.get_text()) and child['class'] != 'sup-anchor':
+                if not re.match(r'\[\d\]', child.get_text()) and child.get_text().strip() != '':
                     f.write(child.get_text().replace(' ', '') + '\n')
 f.close()
