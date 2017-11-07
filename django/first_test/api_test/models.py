@@ -1,7 +1,6 @@
 from django.db import models
 
-class Count(models.Model):
-    hello_text = models.CharField(max_length=200)
-    times = models.IntegerField(default=0)
-    def __str__(self):
-        return self.hello_text
+class Topic(models.Model):
+    topic_title = models.CharField(max_length=200)
+    topic_detail = models.CharField(max_length=200)
+    topic_time = models.BigIntegerField(default=0)

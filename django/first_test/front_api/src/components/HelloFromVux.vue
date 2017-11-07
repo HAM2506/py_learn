@@ -1,79 +1,86 @@
 <template>
 	<div>
-		<x-header :left-options="{showBack: false}">微信
-			<span slot="right">
-				<i class="iconfont icon-more" @click="showMore"></i>
-			</span>
+		<x-header :left-options="{showBack: false}">
+			<div slot="right">
+				<input type="button" value="发表" class="send" :class="{ 'send-light' : isButtonLight }" @click="sendTopic">
+			</div>
 		</x-header>
-		<group title="微信">
-			<cell title="abc" value="abc" is-link></cell>
-			<x-input title="用户名" v-model="value"></x-input>
-		</group>
-		<div class="more-menu">
-
+		<div class="topic-board">
+			<group>
+				<x-input placeholder="标题" v-model="sendInfo.title"></x-input>
+				<x-textarea :max="200" placeholder="内容" v-model="sendInfo.detail"></x-textarea>
+			</group>
 		</div>
 	</div>
 </template>
 
 <script>
-	import { Group, Cell, XInput, XHeader } from 'vux'
+	import { XTextarea, Group, XInput, XHeader } from 'vux'
 	export default {
 		components: {
+			XTextarea,
 			Group,
-			Cell,
 			XInput,
 			XHeader
 		},
 		data () {
 			return {
-				msg: 'Hello World!',
-				value: 123
+				sendInfo: {
+					title: '',
+					detail: ''
+				},
+				isButtonLight: false
 			}
 		},
 		methods: {
-			showMore() {
-				console.info(0)
+			sendTopic() {
+				if (!this.isButtonLight) return;
+				this.sendInfo.time = Date.parse(new Date());
+				this.$ajax.get('api/save_topic/',{
+					params: this.sendInfo
+				}).then((response) => {
+					
+				}).catch(function (error) {
+					console.log(error);
+				});
+				console.log(this.sendInfo)
 			}
 		},
 		mounted() {
-			this.$ajax.get('api/get_hello/').then((response) => {
+			this.$ajax.get('api/get_topic/').then((response) => {
 				
 			}).catch(function (error) {
 				console.log(error);
 			});
+		},
+		watch: {
+			sendInfo: {
+				deep: true,
+				handler: function(val) {
+					val.title && val.detail ? this.isButtonLight = true : this.isButtonLight = false;
+				}
+			}
 		}
 	}
 </script>
 
-<style scoped>
-	.vux-demo {
-		text-align: center;
+<style>
+	.topic-board .weui-cells {
+		margin-top: 0px;
 	}
-	.logo {
-		width: 100px;
-		height: 100px
+	.topic-board textarea {
+		font-family: inherit;
 	}
-	.iconfont {    
-		font-size: 20px;
-    	font-weight: bold;
-	}
-	.more-menu {
-		position: absolute;
-		top: 60px;
-		right: 8px;
-		width: 120px;
-		height: 140px;
+	.send {
+		border: none;
+		width: 40px;
+		height: 20px;
 		background: #35495e;
+		color: green;
+		font-size: 14px;
+		vertical-align: top;
 	}
-	.more-menu:before {
-		content: '';
-		position: absolute;
-		top: -8px;
-    	right: 14px;
-		width: 0;
-		height: 0;
-		border-left: 8px solid transparent;
-		border-right: 8px solid transparent;
-		border-bottom: 10px solid #35495e;
+	.send-light {
+		color: #01e701;
 	}
 </style>

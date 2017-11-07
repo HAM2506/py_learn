@@ -80,11 +80,11 @@ DATABASES = {
         'OPTIONS': {
             'init_command': 'SET sql_mode=STRICT_TRANS_TABLES',
         },
-        'NAME': 'hello',
-        'USER':'root',
-        'PASSWORD':'',
-        'HOST':'localhost',
-        'PORT':'3306',
+        'NAME': 'topicbase',
+        'USER': 'root',
+        'PASSWORD': 'xie7han5',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 

@@ -1,36 +1,32 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
+from django.core import serializers
 from django.http import HttpResponse
 
 import json
-from .models import Count
+from .models import Topic
 
 # Create your views here.
-count = Count.objects.get(pk=1)
 
-def get_hello(request):
-    count.times += 1
-    if count.times == 16: 
-        count.times = 1
-    count.save()
-    hello_info = {
+def get_topic(request):
+    topic = Topic.objects.all()
+    topicList = serializers.serialize('json', Topic.objects.all())
+    parseTopic = []
+    for i in json.loads(topicList):
+        parseTopic.append(i['fields'])
+    topic_info = {
         'resCode': 'Success', 
-        'data': {
-            'text': count.hello_text, 'times': count.times, 
-        }
+        'data': parseTopic
     }
-    return HttpResponse(json.dumps(hello_info))
+    return HttpResponse(json.dumps(topic_info))
 
-    
-def get_helloCount(request):
-    hello_info = {
-        'resCode': 'Success', 
-        'data': {
-            'text': count.hello_text, 'times': count.times, 
-        }
+def save_topic(request):
+    print(request.GET.get('title'))
+    title = request.GET.get('title').encode("utf-8")
+    detail = request.GET.get('detail').encode("utf-8")
+    time = request.GET.get('time')
+    topic = Topic(topic_title=title, topic_detail=detail, topic_time=time)
+    topic.save();
+    save_info = {
+        'resCode': 'Success'
     }
-    if 'text' in request.GET:        
-        text = request.GET['text'] 
-        Count.objects.get(hello_text = text)
-    else:
-        hello_info['resCode'] = 'Fail'
-    return HttpResponse(json.dumps(hello_info)) 
+    return HttpResponse(json.dumps(save_info))
