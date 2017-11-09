@@ -11,17 +11,19 @@
 				<x-textarea :max="200" placeholder="内容" v-model="sendInfo.detail"></x-textarea>
 			</group>
 		</div>
+    	<toast v-model="successToast" type="text"  position="middle">操作成功</toast>
 	</div>
 </template>
 
 <script>
-	import { XTextarea, Group, XInput, XHeader } from 'vux'
+	import { XTextarea, Group, XInput, XHeader, Toast } from 'vux'
 	export default {
 		components: {
 			XTextarea,
 			Group,
 			XInput,
-			XHeader
+			XHeader,
+			Toast
 		},
 		data () {
 			return {
@@ -29,7 +31,8 @@
 					title: '',
 					detail: ''
 				},
-				isButtonLight: false
+				isButtonLight: false,
+				successToast: false
 			}
 		},
 		methods: {
@@ -39,7 +42,11 @@
 				this.$ajax.get('api/save_topic/',{
 					params: this.sendInfo
 				}).then((response) => {
-					
+					this.successToast = true;
+					this.sendInfo = {
+						title: '',
+						detail: ''
+					}
 				}).catch(function (error) {
 					console.log(error);
 				});
@@ -82,5 +89,8 @@
 	}
 	.send-light {
 		color: #01e701;
+	}
+	.topic-board .weui-cell:before {
+		right: 15px;
 	}
 </style>
