@@ -11,7 +11,7 @@
 				<x-textarea :max="200" placeholder="内容" v-model="sendInfo.detail"></x-textarea>
 			</group>
 		</div>
-    	<toast v-model="successToast" type="text"  position="middle">操作成功</toast>
+    	<toast v-model="successToast" type="text" position="middle">发表成功</toast>
 	</div>
 </template>
 
@@ -47,6 +47,7 @@
 						title: '',
 						detail: ''
 					}
+					this.$router.push({ name: 'topic' })
 				}).catch(function (error) {
 					console.log(error);
 				});
@@ -54,6 +55,7 @@
 			}
 		},
 		mounted() {
+			console.log(this)
 			this.$ajax.get('api/get_topic/').then((response) => {
 				
 			}).catch(function (error) {

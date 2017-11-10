@@ -7,12 +7,18 @@ import App from './App'
 import axios from 'axios'
 import routers from './router/index'
 import './assets/css/common.css'
+import filters from './filter/filter.js'
 
 Vue.use(VueRouter)
 
 const routes = routers.routes
 
 Vue.prototype.$ajax = axios
+
+//loop all filter
+Object.keys(filters.filterObj).forEach((key) => {
+  Vue.filter(key, filters.filterObj[key])
+});
 
 const router = new VueRouter({
   routes
