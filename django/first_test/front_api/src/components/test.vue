@@ -17,7 +17,7 @@
 			}
 		},
 		mounted() {
-			this.$ajax.get('api/get_hello/').then((response) => {
+			this.$ajax.get('api/get_topic/').then((response) => {
 				
 			}).catch(function (error) {
 				console.log(error);

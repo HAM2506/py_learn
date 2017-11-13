@@ -39,9 +39,7 @@
 			sendTopic() {
 				if (!this.isButtonLight) return;
 				this.sendInfo.time = Date.parse(new Date());
-				this.$ajax.get('api/save_topic/',{
-					params: this.sendInfo
-				}).then((response) => {
+				this.$ajax.post('api/save_topic/', this.sendInfo).then((response) => {
 					this.successToast = true;
 					this.sendInfo = {
 						title: '',

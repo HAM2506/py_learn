@@ -57,15 +57,15 @@
 				this.topicIndex = i;
 			},
 			deleteConfirm() {
-				this.topicList[this.topicIndex].height = 0;
-				// this.$ajax.get('api/delete_topic/', {
-				// 	params: { id: this.topicId }
-				// }).then((res) => {
-				// 	this.topicList.splice(this.topicIndex, 1);
-				// 	this.successDelete = true;
-				// }).catch((error) => {
-				// 	console.log(error);
-				// });
+				// this.topicList[this.topicIndex].height = 0;
+				this.$ajax.post('api/delete_topic/', { 
+					id: this.topicId 
+				}).then((res) => {
+					this.topicList.splice(this.topicIndex, 1);
+					this.successDelete = true;
+				}).catch((error) => {
+					console.log(error);
+				});
 			}
 		},
 		mounted() {
