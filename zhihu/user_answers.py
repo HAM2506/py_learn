@@ -35,7 +35,7 @@ def nextPage():
         f = open("answers.txt", "a", encoding='utf-8')  
         for i in dataList:
             print(i['question']['title'])
-            f.write(i['question']['title'] + '\n')
+            f.write(i['question']['title'])
         f.close()
         global offsetNum
         offsetNum += 20
